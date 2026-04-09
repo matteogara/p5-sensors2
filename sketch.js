@@ -1,5 +1,6 @@
 let video;
 let audio;
+let fft;
 
 function setup() {
   createCanvas(500, 400);
@@ -10,12 +11,23 @@ function setup() {
   audio = new p5.AudioIn();
   audio.start();
   
+  // FFT
+  fft = new p5.FFT();
+  fft.setInput(audio);
 }
 
 function draw() {
   let volume = audio.getLevel();
   // console.log(volume);
+   
+  fft.analyze();
   
+  let bass = fft.getEnergy("bass");      // Basse frequenze (20-250Hz)
+  let mids = fft.getEnergy("mid");       // Frequenze medie (250-2000Hz)
+  let highs = fft.getEnergy("treble");   // Alte frequenze (2000-20000Hz)
+  
+  // console.log(highs);
+
   // Applica il color key con il colore verde (0, 255, 0) e threshold di 100
   let keyedVideo = colorKey(video, 255, 0, 0, 150);
   image(keyedVideo, 0, 0);
