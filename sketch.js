@@ -11,10 +11,11 @@ function setup() {
   audio = new p5.AudioIn();
   audio.start();
   
-  // FFT
+  // FFT 
   fft = new p5.FFT();
   fft.setInput(audio);
 }
+
 
 function draw() {
   let volume = audio.getLevel();
@@ -47,7 +48,7 @@ function draw() {
   if(volume < 0.001) {
     return;
   }
-  
+
   image(keyedVideo, 0, 0);
 }
 
@@ -125,4 +126,10 @@ function rgbToHsb(r, g, b) {
     s: s * 100,        // Saturation 0-100
     b: bright * 100    // Brightness 0-100
   };
+}
+
+function keyPressed(){
+  if(key === 's'){
+    saveCanvas('myCanvas', 'png');
+  }
 }
